@@ -2,7 +2,7 @@
 
 Converts HEIF images created on iOS 11 devices as fast as ~~humanly~~ possible.
 
-*NOTE*: While we do not have the time to actively maintain tifig anymore, it is functional at a very alpha state. We are open to new maintainers taking the lead. 
+*NOTE*: While we do not have the time to actively maintain tifig anymore, it is functional at a very alpha state. We are open to new maintainers taking the lead.
 
 [![Build Status](https://travis-ci.org/monostream/tifig.svg?branch=master)](https://travis-ci.org/monostream/tifig)
 
@@ -20,6 +20,11 @@ This one-liner should get you going:
 
     brew install cmake vips ffmpeg pkg-config
 
+### Docker
+
+Use the Docker file with `docker build -t tifig .`
+
+You can get the compiled executable (Ubuntu compatible) with `docker run -it -v /tmp:/tmp tifig cp /usr/bin/tifig /tmp/tifig`
 
 #### Linux
 
@@ -95,7 +100,7 @@ We release tifig as static x86_64 binary that should work on any linux without i
 
 ## ToDo's
 
-  * ~~Testing~~ 
+  * ~~Testing~~
   * ~~Create independant static binary~~
   * ~~Keep exif metadata in coverted images~~
   * Cleanup and optimizing
@@ -103,17 +108,17 @@ We release tifig as static x86_64 binary that should work on any linux without i
   * Carry over color profiles
   * Support single image HEIC
   * Improve thumbnailing
-  
+
 ## Software Used / Libraries
 
   * HEIF by Nokia Technologies https://github.com/nokiatech/heif
   * libvips https://github.com/jcupitt/libvips
   * ffmpeg https://www.ffmpeg.org/
   * cxxopts https://github.com/jarro2783/cxxopts
-  
+
 ***Suggestions for improvements and Pull Requests highly welcome!***
- 
 
 
 
-  
+
+

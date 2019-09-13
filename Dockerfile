@@ -1,14 +1,14 @@
-FROM alpine as builder
+FROM ubuntu
 
-RUN echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
+RUN apt-get update
+RUN apt-get -y install build-essential pkg-config cmake make wget dumb-init
+RUN apt-get -y install libglib2.0-dev libexpat1-dev libjpeg-dev libexif-dev libpng-dev libtiff-dev libavcodec-dev libswscale-dev fftw-dev
 
-RUN apk --no-cache add \
-    vips-dev@edge \
-    ffmpeg-dev \
-    fftw-dev \
-    g++ \
-    cmake \
-    make
+RUN apt-get -y install wget
+RUN wget https://github.com/libvips/libvips/releases/download/v8.8.2/vips-8.8.2.tar.gz
+RUN tar xzf vips-8.8.2.tar.gz
+RUN cd vips-8.8.2 && chmod +x ./configure && ./configure
+RUN cd vips-8.8.2 && make && make install
 
 ADD . /tifig
 
@@ -18,21 +18,8 @@ RUN \
  cmake .. &&\
  make
 
-
-
-FROM alpine
-
-RUN echo '@edge http://dl-cdn.alpinelinux.org/alpine/edge/testing' >> /etc/apk/repositories
-
-RUN apk --no-cache add \
-    dumb-init \
-    vips@edge \
-    ffmpeg
-
-WORKDIR /tifig
-COPY --from=builder /tifig/build/tifig .
-
-ENV PATH "${PATH}:/tifig"
+RUN ldconfig
+RUN cp /tifig/build/tifig /usr/bin/tifig
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD ["tifig"]
